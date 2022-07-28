@@ -1,0 +1,26 @@
+.days h3 {
+    font-size: 20px;
+    margin-bottom: 22px;
+}
+
+.showtimes {
+    display: flex;
+    column-gap: 8px;
+    margin-bottom: 27px;
+}
+
+.time {
+    width: 83px;
+    height: 43px;
+    background-color: #E8833A;
+    color: #FFFFFF;
+    font-size: 18px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-list {
+    margin-bottom: 139px;
+}
