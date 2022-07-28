@@ -7,6 +7,7 @@
 body {
     background-color: #FFFFFF;
     font-family: 'Roboto', sans-serif;
+    color: #293845;
 }
 
 main {
@@ -15,6 +16,7 @@ main {
 
 .title {
     font-size: 24px;
-    color: #293845;
     text-align: center;
+    margin-top: 106px;
+    margin-bottom: 39px;
 }

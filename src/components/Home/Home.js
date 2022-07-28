@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 export default function Home() {
@@ -18,12 +19,14 @@ export default function Home() {
             <div className="movie-list">
                 {movies.map((value) => {
                     return (
-                        <div className="movie">
-                            <img src={value.posterURL} alt="" />
-                        </div>
+                        <Link to={`/sessoes/${value.id}`} key={value.id} >
+                            <div className="movie">
+                                <img src={value.posterURL} alt="" />
+                            </div>
+                        </Link>
                     )
                 })}
             </div>
         </main>
-    )
+    );
 }
