@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "../css/reset.css";
-import "../css/style.css";
-import Header from "./Header/Header";
-import Home from "./Home/Home";
-import Movie from "./Movie/Movie";
-import Session from "./Session/Session";
+import GlobalStyle from "../styles/globalStyles";
+import Header from "./Header";
+import Home from "./Home";
+import Movie from "./Movie";
+import Session from "./Session";
 
 
 function App() {
   return (
     <BrowserRouter>
+      <GlobalStyle />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -46,3 +49,33 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* After the CSS Reset, other global styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    color: #293845;
+}
+
+main {
+    padding: 0 25px;
+}
+
+.title {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 106px;
+    margin-bottom: 39px;
+}
+
+a {
+    text-decoration: none;
+}`;
+
+export default GlobalStyle;
