@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-export default function Seat({children, isAvailable, id, seatIds, setSeatIds}) {
+export default function Seat({ children, isAvailable, id, seatIds, setSeatIds, name, seatNames, setSeatNames }) {
     const [clicked, setClicked] = useState(false);
 
     return (
@@ -11,11 +11,15 @@ export default function Seat({children, isAvailable, id, seatIds, setSeatIds}) {
             }
             else if (seatIds.includes(id) === false) {
                 setSeatIds([...seatIds, id]);
+                setSeatNames([...seatNames, name]);
                 setClicked(!clicked);
             }
             else {
                 setSeatIds((current) => current.filter((seatIds) => {
                     return seatIds !== id;
+                }));
+                setSeatNames((current) => current.filter((seatNames) => {
+                    return seatNames !== name;
                 }));
                 setClicked(!clicked);
             }
@@ -29,7 +33,7 @@ export const SeatWrapper = styled.div`
     width: 26px;
     height: 26px;
     background-color: ${(props) => {
-        if(props.isAvailable === false){
+        if (props.isAvailable === false) {
             return "#FBE192";
         }
         else if (props.clicked === true) {
@@ -40,7 +44,7 @@ export const SeatWrapper = styled.div`
         }
     }};
     border: 1px solid ${(props) => {
-        if(props.isAvailable === false){
+        if (props.isAvailable === false) {
             return "#F7C52B";
         }
         else if (props.clicked === true) {

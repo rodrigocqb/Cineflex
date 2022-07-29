@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "./Footer";
 import Seat from "./Seat";
@@ -11,8 +11,11 @@ export default function Session() {
     const [name, setName] = useState("");
     const [cpf, setCpf] = useState("");
     const [seatIds, setSeatIds] = useState([]);
+    const [seatNames, setSeatNames] = useState([]);
 
     const { idSessao } = useParams();
+
+    let navigate = useNavigate();
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`);
@@ -23,6 +26,9 @@ export default function Session() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        if (seatIds.length === 0) {
+            return alert("Escolha pelo menos um assento");
+        }
         const promise = axios.post("https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many",
             {
                 ids: seatIds,
@@ -30,12 +36,21 @@ export default function Session() {
                 cpf: cpf
             });
         promise.then(() => {
-            setSeatIds([]);
-            setCpf("");
-            setName("");
+            // setSeatIds([]);
+            // setCpf("");
+            // setName("");
+            navigate("/sucesso", {
+                replace: false, state: {
+                    cpf,
+                    name,
+                    weekday: seats.day.weekday,
+                    date: seats.day.date,
+                    title: seats.movie.title,
+                    seatNames
+                }
+            });
         })
     }
-    console.log(seatIds)
 
     return (
         <>
@@ -46,15 +61,16 @@ export default function Session() {
                         <Title>Selecione o(s) assento(s)</Title>
 
                         <SeatList>
-                                {seats.seats.map((value) => {
-                                    return (
-                                        <Seat key={value.id} isAvailable={value.isAvailable} id={value.id} 
-                                        seatIds={seatIds} setSeatIds={setSeatIds}>
-                                            {value.name.length > 1 ?
-                                                value.name : `0${value.name}`}
-                                        </Seat>
-                                    );
-                                })}
+                            {seats.seats.map((value) => {
+                                return (
+                                    <Seat key={value.id} isAvailable={value.isAvailable} id={value.id}
+                                        seatIds={seatIds} setSeatIds={setSeatIds} name={value.name}
+                                        seatNames={seatNames} setSeatNames={setSeatNames}>
+                                        {value.name.length > 1 ?
+                                            value.name : `0${value.name}`}
+                                    </Seat>
+                                );
+                            })}
                         </SeatList>
                         <Captions>
                             <div>
