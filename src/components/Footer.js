@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
-export default function Footer({ img, title }) {
+export default function Footer({ img, title, children }) {
     return (
         <AppFooter>
             <Container>
                 <img src={img} />
             </Container>
             <div>
-                <span className="chosen-title">{title}</span>
+                <div>
+                    <span className="chosen-title">{title}</span>
+                </div>
+                <SpanWrapper>
+                    {children}
+                </SpanWrapper>
             </div>
         </AppFooter>
     );
@@ -42,3 +47,6 @@ const Container = styled.div`
     width: 48px;
     height: 72px;
     }`;
+
+const SpanWrapper = styled.div`
+    margin-top: 4px`;

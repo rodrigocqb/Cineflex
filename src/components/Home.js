@@ -7,7 +7,7 @@ export default function Home() {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        const promise = axios.get("https://mock-api.driven.com.br/api/v5/cineflex/movies");
+        const promise = axios.get("https://mock-api.driven.com.br/api/v7/cineflex/movies");
         promise.then((response) => {
             setMovies(response.data);
         })
@@ -24,7 +24,7 @@ export default function Home() {
                                 <img src={value.posterURL} alt="" />
                             </div>
                         </Link>
-                    )
+                    );
                 })}
             </MovieList>
         </main>
@@ -34,7 +34,8 @@ export default function Home() {
 const MovieList = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    column-gap: 25px;
     row-gap: 11px;
     margin-bottom: 22px;
     

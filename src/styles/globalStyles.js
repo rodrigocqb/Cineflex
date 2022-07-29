@@ -67,7 +67,7 @@ main {
     padding: 0 25px;
 }
 
-.title {
+h2 {
     font-size: 24px;
     text-align: center;
     margin-top: 106px;

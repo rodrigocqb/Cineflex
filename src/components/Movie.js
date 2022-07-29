@@ -9,11 +9,11 @@ export default function Movie() {
     const { idFilme } = useParams();
 
     useEffect(() => {
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`);
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${idFilme}/showtimes`);
         promise.then((response) => {
             setSessions(response.data);
         })
-    }, [])
+    }, []);
 
     return (
         <>
@@ -29,7 +29,7 @@ export default function Movie() {
                                     <Showtimes>
                                         {days.showtimes.map((time) => {
                                             return (
-                                                <Link to={`/assentos/${time.id}`} style={{ textDecoration: 'none' }}>
+                                                <Link to={`/assentos/${time.id}`} key={time.id} style={{ textDecoration: 'none' }}>
                                                     <div className="time">{time.name}</div>
                                                 </Link>
                                             );
