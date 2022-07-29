@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "./Footer";
+import Seat from "./Seat";
+import { SeatWrapper } from "./Seat";
 
 export default function Session() {
     const [seats, setSeats] = useState({});
@@ -44,23 +46,10 @@ export default function Session() {
                         <Title>Selecione o(s) assento(s)</Title>
 
                         <SeatList>
-                            {seats.seats === undefined ?
-                                <div>Carregando...</div> :
-                                seats.seats.map((value) => {
+                                {seats.seats.map((value) => {
                                     return (
-                                        <Seat key={value.id} isAvailable={value.isAvailable} onClick={() => {
-                                            if (!value.isAvailable) {
-                                                alert("Esse assento não está disponível");
-                                            }
-                                            else if (seatIds.includes(value.id) === false) {
-                                                setSeatIds([...seatIds, value.id]);
-                                            }
-                                            else {
-                                                setSeatIds((current) => current.filter((seatIds) => {
-                                                    return seatIds !== value.id;
-                                                }));
-                                            }
-                                        }}>
+                                        <Seat key={value.id} isAvailable={value.isAvailable} id={value.id} 
+                                        seatIds={seatIds} setSeatIds={setSeatIds}>
                                             {value.name.length > 1 ?
                                                 value.name : `0${value.name}`}
                                         </Seat>
@@ -117,18 +106,6 @@ const SeatList = styled.div`
     row-gap: 18px;
     justify-content: center;`;
 
-const Seat = styled.div`
-    width: 26px;
-    height: 26px;
-    background-color: ${(props) => !props.isAvailable ? "#FBE192" : "#C3CFD9"};
-    border: 1px solid ${(props) => !props.isAvailable ? "#F7C52B" : "#808F9D"};
-    border-radius: 12px;
-    color: #000000;
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;`;
-
 const Captions = styled.div`
     display: flex;
     margin-top: 16px;
@@ -141,7 +118,7 @@ const Captions = styled.div`
         font-size: 13px;
     }`;
 
-const Caption = styled(Seat)`
+const Caption = styled(SeatWrapper)`
     background-color: ${props => {
         switch (props.color) {
             case "watergreen":
