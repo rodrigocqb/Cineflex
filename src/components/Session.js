@@ -18,10 +18,12 @@ export default function Session() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`);
+        const promise = axios.get(
+            `https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`
+        );
         promise.then((response) => {
             setSeats(response.data);
-        })
+        });
     }, []);
 
     function handleSubmit(event) {
@@ -29,33 +31,34 @@ export default function Session() {
         if (seatIds.length === 0) {
             return alert("Escolha pelo menos um assento");
         }
-        const promise = axios.post("https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many",
+        const promise = axios.post(
+            "https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many",
             {
                 ids: seatIds,
                 name: name,
-                cpf: cpf
-            });
+                cpf: cpf,
+            }
+        );
         promise.then(() => {
-            // setSeatIds([]);
-            // setCpf("");
-            // setName("");
             navigate("/sucesso", {
-                replace: false, state: {
+                replace: false,
+                state: {
                     cpf,
                     name,
-                    weekday: seats.day.weekday,
+                    time: seats.name,
                     date: seats.day.date,
                     title: seats.movie.title,
-                    seatNames
-                }
+                    seatNames,
+                },
             });
-        })
+        });
     }
 
     return (
         <>
-            {seats.seats === undefined ?
-                <div>Carregando...</div> :
+            {seats.seats === undefined ? (
+                <div>Carregando...</div>
+            ) : (
                 <>
                     <main>
                         <Title>Selecione o(s) assento(s)</Title>
@@ -63,11 +66,17 @@ export default function Session() {
                         <SeatList>
                             {seats.seats.map((value) => {
                                 return (
-                                    <Seat key={value.id} isAvailable={value.isAvailable} id={value.id}
-                                        seatIds={seatIds} setSeatIds={setSeatIds} name={value.name}
-                                        seatNames={seatNames} setSeatNames={setSeatNames}>
-                                        {value.name.length > 1 ?
-                                            value.name : `0${value.name}`}
+                                    <Seat
+                                        key={value.id}
+                                        isAvailable={value.isAvailable}
+                                        id={value.id}
+                                        seatIds={seatIds}
+                                        setSeatIds={setSeatIds}
+                                        name={value.name}
+                                        seatNames={seatNames}
+                                        setSeatNames={setSeatNames}
+                                    >
+                                        {value.name.length > 1 ? value.name : `0${value.name}`}
                                     </Seat>
                                 );
                             })}
@@ -90,52 +99,69 @@ export default function Session() {
                         <Form onSubmit={handleSubmit}>
                             <div>
                                 <label for="name">Nome do comprador:</label>
-                                <input id="name" name="name" type="text"
-                                    placeholder="Digite seu nome..." value={name}
-                                    required onChange={e => setName(e.target.value)} />
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Digite seu nome..."
+                                    value={name}
+                                    required
+                                    onChange={(e) => setName(e.target.value)}
+                                />
                             </div>
                             <div>
                                 <label for="cpf">CPF do comprador:</label>
-                                <input id="cpf" name="cpf" type="text" placeholder="Digite seu CPF... (com . e -)"
-                                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$" value={cpf}
-                                    required onChange={e => setCpf(e.target.value)} />
+                                <input
+                                    id="cpf"
+                                    name="cpf"
+                                    type="text"
+                                    placeholder="Digite seu CPF... (com . e -)"
+                                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$"
+                                    value={cpf}
+                                    required
+                                    onChange={(e) => setCpf(e.target.value)}
+                                />
                             </div>
-                            <button type="submit">Reservar assento(s)</button>
+                            <Button type="submit">Reservar assento(s)</Button>
                         </Form>
                     </main>
 
                     <Footer img={seats.movie.posterURL} title={seats.movie.title}>
                         {<span>{`${seats.day.weekday} - ${seats.name}`}</span>}
                     </Footer>
-                </>}
+                </>
+            )}
         </>
     );
 }
 
 const Title = styled.h2`
-margin-bottom: 26px`;
+  margin-bottom: 26px;
+`;
 
 const SeatList = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 7px;
-    row-gap: 18px;
-    justify-content: center;`;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 7px;
+  row-gap: 18px;
+  justify-content: center;
+`;
 
 const Captions = styled.div`
+  display: flex;
+  margin-top: 16px;
+  justify-content: space-around;
+  div {
     display: flex;
-    margin-top: 16px;
-    justify-content: space-around;
-    div{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #4E5A65;
-        font-size: 13px;
-    }`;
+    flex-direction: column;
+    align-items: center;
+    color: #4e5a65;
+    font-size: 13px;
+  }
+`;
 
 const Caption = styled(SeatWrapper)`
-    background-color: ${props => {
+  background-color: ${(props) => {
         switch (props.color) {
             case "watergreen":
                 return "#8DD7CF";
@@ -147,7 +173,7 @@ const Caption = styled(SeatWrapper)`
                 return "#FBE192";
         }
     }};
-    border-color: ${props => {
+  border-color: ${(props) => {
         switch (props.color) {
             case "watergreen":
                 return "#1AAE9E";
@@ -159,45 +185,46 @@ const Caption = styled(SeatWrapper)`
                 return "#F7C52B";
         }
     }};
-    margin-bottom: 8px;`;
+  margin-bottom: 8px;
+`;
 
 const Form = styled.form`
-    margin-top: 36px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    label {
-        display: block;
-        font-size: 18px;
-        margin-top: 9px;
-        margin-bottom: 3px;
-    }
+  label {
+    display: block;
+    font-size: 18px;
+    margin-top: 9px;
+    margin-bottom: 3px;
+  }
 
-    input {
-        padding-left: 18px;
-        width: 327px;
-        height: 51px;
-        background-color: #FFFFFF;
-        border: 1px solid #D5D5D5;
-        border-radius: 3px;
-        font-size: 18px;
-        outline: none;
-    }
+  input {
+    padding-left: 18px;
+    width: 327px;
+    height: 51px;
+    background-color: #ffffff;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    font-size: 18px;
+    outline: none;
+  }
 
-    input::placeholder {
-        font-style: italic;
-        color: #AFAFAF;
-    }
+  input::placeholder {
+    font-style: italic;
+    color: #afafaf;
+  }
+`;
 
-    button {
-        width: 225px;
-        height: 42px;
-        margin-top: 57px;
-        border: 0px;
-        background-color: #E8833A;
-        border-radius: 3px;
-        color: #FFFFFF;
-        font-size: 18px;
-    }
+export const Button = styled.button`
+    width: 225px;
+    height: 42px;
+    margin-top: 57px;
+    border: 0px;
+    background-color: #e8833a;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 18px;
 `;

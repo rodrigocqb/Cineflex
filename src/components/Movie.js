@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "./Footer";
 
@@ -9,10 +9,12 @@ export default function Movie() {
     const { idFilme } = useParams();
 
     useEffect(() => {
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${idFilme}/showtimes`);
+        const promise = axios.get(
+            `https://mock-api.driven.com.br/api/v7/cineflex/movies/${idFilme}/showtimes`
+        );
         promise.then((response) => {
             setSessions(response.data);
-        })
+        });
     }, []);
 
     return (
@@ -20,16 +22,21 @@ export default function Movie() {
             <main className="selected-movie">
                 <h2 className="title">Selecione o horário</h2>
                 <SessionList>
-                    {sessions.days === undefined ?
-                        (<div>carregando...</div>) :
-                        (sessions.days.map((days) => {
+                    {sessions.days === undefined ? (
+                        <div>carregando...</div>
+                    ) : (
+                        sessions.days.map((days) => {
                             return (
-                                <div className="days" key={days.id} >
+                                <div className="days" key={days.id}>
                                     <h3>{`${days.weekday} - ${days.date}`}</h3>
                                     <Showtimes>
                                         {days.showtimes.map((time) => {
                                             return (
-                                                <Link to={`/assentos/${time.id}`} key={time.id} style={{ textDecoration: 'none' }}>
+                                                <Link
+                                                    to={`/assentos/${time.id}`}
+                                                    key={time.id}
+                                                    style={{ textDecoration: "none" }}
+                                                >
                                                     <div className="time">{time.name}</div>
                                                 </Link>
                                             );
@@ -37,7 +44,8 @@ export default function Movie() {
                                     </Showtimes>
                                 </div>
                             );
-                        }))}
+                        })
+                    )}
                 </SessionList>
             </main>
             <Footer img={sessions.posterURL} title={sessions.title} />
@@ -46,26 +54,28 @@ export default function Movie() {
 }
 
 const SessionList = styled.div`
-    margin-bottom: 139px;
-    
-    h3 {
+  margin-bottom: 139px;
+
+  h3 {
     font-size: 20px;
     margin-bottom: 22px;
-}`;
+  }
+`;
 
 const Showtimes = styled.div`
+  display: flex;
+  column-gap: 8px;
+  margin-bottom: 27px;
+
+  div {
+    width: 83px;
+    height: 43px;
+    background-color: #e8833a;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 3px;
     display: flex;
-    column-gap: 8px;
-    margin-bottom: 27px;
-    
-    div {
-        width: 83px;
-        height: 43px;
-        background-color: #E8833A;
-        color: #FFFFFF;
-        font-size: 18px;
-        border-radius: 3px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }`;
+    justify-content: center;
+    align-items: center;
+  }
+`;

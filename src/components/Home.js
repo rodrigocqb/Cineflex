@@ -7,10 +7,12 @@ export default function Home() {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        const promise = axios.get("https://mock-api.driven.com.br/api/v7/cineflex/movies");
+        const promise = axios.get(
+            "https://mock-api.driven.com.br/api/v7/cineflex/movies"
+        );
         promise.then((response) => {
             setMovies(response.data);
-        })
+        });
     }, []);
 
     return (
@@ -19,7 +21,7 @@ export default function Home() {
             <MovieList>
                 {movies.map((value) => {
                     return (
-                        <Link to={`/sessoes/${value.id}`} key={value.id} >
+                        <Link to={`/sessoes/${value.id}`} key={value.id}>
                             <div className="movie">
                                 <img src={value.posterURL} alt="" />
                             </div>
@@ -32,23 +34,24 @@ export default function Home() {
 }
 
 const MovieList = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    column-gap: 25px;
-    row-gap: 11px;
-    margin-bottom: 22px;
-    
-    div {
-        width: 145px;
-        height: 209px;
-        padding: 8px;
-        background-color: #FFFFFF;
-        box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-        border-radius: 3px;
-    }
-    
-    img {
-        width: 129px;
-        height: 193px;
-    }`;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 25px;
+  row-gap: 11px;
+  margin-bottom: 22px;
+
+  div {
+    width: 145px;
+    height: 209px;
+    padding: 8px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+  }
+
+  img {
+    width: 129px;
+    height: 193px;
+  }
+`;
