@@ -5,7 +5,7 @@ export default function Seat({children, isAvailable, id, seatIds, setSeatIds}) {
     const [clicked, setClicked] = useState(false);
 
     return (
-        <SeatWrapper isAvailable={isAvailable} onClick={() => {
+        <SeatWrapper isAvailable={isAvailable} clicked={clicked} onClick={() => {
             if (!isAvailable) {
                 alert("Esse assento não está disponível");
             }
@@ -28,8 +28,28 @@ export default function Seat({children, isAvailable, id, seatIds, setSeatIds}) {
 export const SeatWrapper = styled.div`
     width: 26px;
     height: 26px;
-    background-color: ${(props) => !props.isAvailable ? "#FBE192" : "#C3CFD9"};
-    border: 1px solid ${(props) => !props.isAvailable ? "#F7C52B" : "#808F9D"};
+    background-color: ${(props) => {
+        if(props.isAvailable === false){
+            return "#FBE192";
+        }
+        else if (props.clicked === true) {
+            return "#8DD7CF";
+        }
+        else {
+            return "#C3CFD9";
+        }
+    }};
+    border: 1px solid ${(props) => {
+        if(props.isAvailable === false){
+            return "#F7C52B";
+        }
+        else if (props.clicked === true) {
+            return "#1AAE9E";
+        }
+        else {
+            return "#7B8B99";
+        }
+    }};
     border-radius: 12px;
     color: #000000;
     font-size: 11px;
