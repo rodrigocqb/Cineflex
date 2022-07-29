@@ -6,6 +6,10 @@ import Footer from "./Footer";
 
 export default function Session() {
     const [seats, setSeats] = useState({});
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [seatIds, setSeatIds] = useState([]);
+
     const { idSessao } = useParams();
 
     useEffect(() => {
@@ -14,6 +18,22 @@ export default function Session() {
             setSeats(response.data);
         })
     }, []);
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        const promise = axios.post("https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many",
+            {
+                ids: seatIds,
+                name: name,
+                cpf: cpf
+            });
+        promise.then(() => {
+            setSeatIds([]);
+            setCpf("");
+            setName("");
+        })
+    }
+    console.log(seatIds)
 
     return (
         <>
@@ -28,8 +48,22 @@ export default function Session() {
                                 <div>Carregando...</div> :
                                 seats.seats.map((value) => {
                                     return (
-                                        <Seat key={value.id} isAvailable={value.isAvailable}>{value.name.length > 1 ? 
-                                            value.name : `0${value.name}`}</Seat>
+                                        <Seat key={value.id} isAvailable={value.isAvailable} onClick={() => {
+                                            if (!value.isAvailable) {
+                                                alert("Esse assento não está disponível");
+                                            }
+                                            else if (seatIds.includes(value.id) === false) {
+                                                setSeatIds([...seatIds, value.id]);
+                                            }
+                                            else {
+                                                setSeatIds((current) => current.filter((seatIds) => {
+                                                    return seatIds !== value.id;
+                                                }));
+                                            }
+                                        }}>
+                                            {value.name.length > 1 ?
+                                                value.name : `0${value.name}`}
+                                        </Seat>
                                     );
                                 })}
                         </SeatList>
@@ -48,15 +82,18 @@ export default function Session() {
                             </div>
                         </Captions>
 
-                        <Form>
+                        <Form onSubmit={handleSubmit}>
                             <div>
                                 <label for="name">Nome do comprador:</label>
-                                <input id="name" name="name" type="text" placeholder="Digite seu nome..." required />
+                                <input id="name" name="name" type="text"
+                                    placeholder="Digite seu nome..." value={name}
+                                    required onChange={e => setName(e.target.value)} />
                             </div>
                             <div>
                                 <label for="cpf">CPF do comprador:</label>
                                 <input id="cpf" name="cpf" type="text" placeholder="Digite seu CPF... (com . e -)"
-                                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$" required />
+                                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$" value={cpf}
+                                    required onChange={e => setCpf(e.target.value)} />
                             </div>
                             <button type="submit">Reservar assento(s)</button>
                         </Form>
