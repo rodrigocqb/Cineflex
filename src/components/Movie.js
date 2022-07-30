@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "../styles/Loader";
 import Footer from "./Footer";
 
 export default function Movie() {
@@ -19,36 +20,38 @@ export default function Movie() {
 
     return (
         <>
-            <main className="selected-movie">
-                <h2 className="title">Selecione o horário</h2>
-                <SessionList>
-                    {sessions.days === undefined ? (
-                        <div>carregando...</div>
-                    ) : (
-                        sessions.days.map((days) => {
-                            return (
-                                <div className="days" key={days.id}>
-                                    <h3>{`${days.weekday} - ${days.date}`}</h3>
-                                    <Showtimes>
-                                        {days.showtimes.map((time) => {
-                                            return (
-                                                <Link
-                                                    to={`/assentos/${time.id}`}
-                                                    key={time.id}
-                                                    style={{ textDecoration: "none" }}
-                                                >
-                                                    <div className="time">{time.name}</div>
-                                                </Link>
-                                            );
-                                        })}
-                                    </Showtimes>
-                                </div>
-                            );
-                        })
-                    )}
-                </SessionList>
-            </main>
-            <Footer img={sessions.posterURL} title={sessions.title} />
+            {sessions.days === undefined ? (
+                <Loader />
+            ) : (
+                <>
+                    <main className="selected-movie">
+                        <h2 className="title">Selecione o horário</h2>
+                        <SessionList>
+                            {sessions.days.map((days) => {
+                                return (
+                                    <div className="days" key={days.id}>
+                                        <h3>{`${days.weekday} - ${days.date}`}</h3>
+                                        <Showtimes>
+                                            {days.showtimes.map((time) => {
+                                                return (
+                                                    <Link
+                                                        to={`/assentos/${time.id}`}
+                                                        key={time.id}
+                                                        style={{ textDecoration: "none" }}
+                                                    >
+                                                        <div className="time">{time.name}</div>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </Showtimes>
+                                    </div>
+                                );
+                            })}
+                        </SessionList>
+                    </main>
+                    <Footer img={sessions.posterURL} title={sessions.title} />
+                </>
+            )}
         </>
     );
 }

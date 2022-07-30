@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "../styles/Loader";
 
 export default function Home() {
     const [movies, setMovies] = useState([]);
@@ -16,20 +17,26 @@ export default function Home() {
     }, []);
 
     return (
-        <main className="home">
-            <h2 className="title">Selecione o filme</h2>
-            <MovieList>
-                {movies.map((value) => {
-                    return (
-                        <Link to={`/sessoes/${value.id}`} key={value.id}>
-                            <div className="movie">
-                                <img src={value.posterURL} alt="" />
-                            </div>
-                        </Link>
-                    );
-                })}
-            </MovieList>
-        </main>
+        <>
+            {movies.length === 0 ? (
+                <Loader />
+            ) : (
+                <main className="home">
+                    <h2 className="title">Selecione o filme</h2>
+                    <MovieList>
+                        {movies.map((value) => {
+                            return (
+                                <Link to={`/sessoes/${value.id}`} key={value.id}>
+                                    <div className="movie">
+                                        <img src={value.posterURL} alt="" />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </MovieList>
+                </main>
+            )}
+        </>
     );
 }
 

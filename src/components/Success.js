@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "./Session";
+import { Button } from "./Form";
+
 
 export default function () {
     const { state } = useLocation();
@@ -26,7 +27,7 @@ export default function () {
                         <h3>Ingressos</h3>
                         {seatNames.map((value) => {
                             return (
-                                <p>
+                                <p key={value}>
                                     {value.length > 1 ? `Assento ${value}` : `Assento 0${value}`}
                                 </p>
                             );

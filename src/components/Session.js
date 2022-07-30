@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Loader from "../styles/Loader";
+import Captions from "./Captions";
 import Footer from "./Footer";
+import Form from "./Form";
 import Seat from "./Seat";
-import { SeatWrapper } from "./Seat";
 
 export default function Session() {
     const [seats, setSeats] = useState({});
@@ -15,8 +17,6 @@ export default function Session() {
 
     const { idSessao } = useParams();
 
-    let navigate = useNavigate();
-
     useEffect(() => {
         const promise = axios.get(
             `https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`
@@ -26,38 +26,10 @@ export default function Session() {
         });
     }, []);
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        if (seatIds.length === 0) {
-            return alert("Escolha pelo menos um assento");
-        }
-        const promise = axios.post(
-            "https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many",
-            {
-                ids: seatIds,
-                name: name,
-                cpf: cpf,
-            }
-        );
-        promise.then(() => {
-            navigate("/sucesso", {
-                replace: false,
-                state: {
-                    cpf,
-                    name,
-                    time: seats.name,
-                    date: seats.day.date,
-                    title: seats.movie.title,
-                    seatNames,
-                },
-            });
-        });
-    }
-
     return (
         <>
             {seats.seats === undefined ? (
-                <div>Carregando...</div>
+                <Loader />
             ) : (
                 <>
                     <main>
@@ -81,49 +53,18 @@ export default function Session() {
                                 );
                             })}
                         </SeatList>
-                        <Captions>
-                            <div>
-                                <Caption color={"watergreen"}></Caption>
-                                <p>Selecionado</p>
-                            </div>
-                            <div>
-                                <Caption color={"gray"}></Caption>
-                                <p>Disponível</p>
-                            </div>
-                            <div>
-                                <Caption color={"yellow"}></Caption>
-                                <p>Indisponível</p>
-                            </div>
-                        </Captions>
 
-                        <Form onSubmit={handleSubmit}>
-                            <div>
-                                <label for="name">Nome do comprador:</label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    placeholder="Digite seu nome..."
-                                    value={name}
-                                    required
-                                    onChange={(e) => setName(e.target.value)}
-                                />
-                            </div>
-                            <div>
-                                <label for="cpf">CPF do comprador:</label>
-                                <input
-                                    id="cpf"
-                                    name="cpf"
-                                    type="text"
-                                    placeholder="Digite seu CPF... (com . e -)"
-                                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$"
-                                    value={cpf}
-                                    required
-                                    onChange={(e) => setCpf(e.target.value)}
-                                />
-                            </div>
-                            <Button type="submit">Reservar assento(s)</Button>
-                        </Form>
+                        <Captions />
+
+                        <Form
+                            name={name}
+                            setName={setName}
+                            seats={seats}
+                            cpf={cpf}
+                            setCpf={setCpf}
+                            seatIds={seatIds}
+                            seatNames={seatNames}
+                        />
                     </main>
 
                     <Footer img={seats.movie.posterURL} title={seats.movie.title}>
@@ -145,86 +86,4 @@ const SeatList = styled.div`
   column-gap: 7px;
   row-gap: 18px;
   justify-content: center;
-`;
-
-const Captions = styled.div`
-  display: flex;
-  margin-top: 16px;
-  justify-content: space-around;
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #4e5a65;
-    font-size: 13px;
-  }
-`;
-
-const Caption = styled(SeatWrapper)`
-  background-color: ${(props) => {
-        switch (props.color) {
-            case "watergreen":
-                return "#8DD7CF";
-
-            case "gray":
-                return "#C3CFD9";
-
-            case "yellow":
-                return "#FBE192";
-        }
-    }};
-  border-color: ${(props) => {
-        switch (props.color) {
-            case "watergreen":
-                return "#1AAE9E";
-
-            case "gray":
-                return "#7B8B99";
-
-            case "yellow":
-                return "#F7C52B";
-        }
-    }};
-  margin-bottom: 8px;
-`;
-
-const Form = styled.form`
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  label {
-    display: block;
-    font-size: 18px;
-    margin-top: 9px;
-    margin-bottom: 3px;
-  }
-
-  input {
-    padding-left: 18px;
-    width: 327px;
-    height: 51px;
-    background-color: #ffffff;
-    border: 1px solid #d5d5d5;
-    border-radius: 3px;
-    font-size: 18px;
-    outline: none;
-  }
-
-  input::placeholder {
-    font-style: italic;
-    color: #afafaf;
-  }
-`;
-
-export const Button = styled.button`
-    width: 225px;
-    height: 42px;
-    margin-top: 57px;
-    border: 0px;
-    background-color: #e8833a;
-    border-radius: 3px;
-    color: #ffffff;
-    font-size: 18px;
 `;
