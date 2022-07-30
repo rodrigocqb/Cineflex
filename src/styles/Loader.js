@@ -2,9 +2,9 @@ import styled, { keyframes } from "styled-components";
 
 export default function Loader() {
     return (
-        <Wrapper>
+        <LoaderWrapper>
             <Spinner></Spinner>
-        </Wrapper>
+        </LoaderWrapper>
     );
 }
 
@@ -22,12 +22,12 @@ const Spin = keyframes`
     100% { transform: rotate(360deg); }
 `;
 
-const Spinner = styled(Container)`
+export const Spinner = styled(Container)`
   animation-name: ${Spin};
+  margin-top: 60%;
 `;
 
-const Wrapper = styled.div`
+export const LoaderWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: 60%;
+  justify-content: center;  
 `;

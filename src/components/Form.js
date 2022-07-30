@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Loader, { LoaderWrapper, Spinner } from "../styles/Loader";
 
 export default function Form({
     cpf,
@@ -11,6 +13,8 @@ export default function Form({
     seatNames,
     seatIds,
 }) {
+    const [sent, setSent] = useState(false);
+
     let navigate = useNavigate();
 
     function handleSubmit(event) {
@@ -26,6 +30,9 @@ export default function Form({
                 cpf: cpf,
             }
         );
+
+        setSent(true);
+
         promise.then(() => {
             navigate("/sucesso", {
                 replace: false,
@@ -42,34 +49,42 @@ export default function Form({
     }
 
     return (
-        <FormWrapper onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="name">Nome do comprador:</label>
-                <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Digite seu nome..."
-                    value={name}
-                    required
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
-            <div>
-                <label htmlFor="cpf">CPF do comprador:</label>
-                <input
-                    id="cpf"
-                    name="cpf"
-                    type="text"
-                    placeholder="Digite seu CPF... (com . e -)"
-                    pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$"
-                    value={cpf}
-                    required
-                    onChange={(e) => setCpf(e.target.value)}
-                />
-            </div>
-            <Button type="submit">Reservar assento(s)</Button>
-        </FormWrapper>
+        <>
+            {sent === true ? (
+                <LoaderWrapper>
+                    <FormSpinner />
+                </LoaderWrapper>
+            ) : (
+                <FormWrapper onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="name">Nome do comprador:</label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Digite seu nome..."
+                            value={name}
+                            required
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="cpf">CPF do comprador:</label>
+                        <input
+                            id="cpf"
+                            name="cpf"
+                            type="text"
+                            placeholder="Digite seu CPF... (com . e -)"
+                            pattern="^([0-9]){3}\.([0-9]){3}\.([0-9]){3}-([0-9]){2}$"
+                            value={cpf}
+                            required
+                            onChange={(e) => setCpf(e.target.value)}
+                        />
+                    </div>
+                    <Button type="submit">Reservar assento(s)</Button>
+                </FormWrapper>
+            )}
+        </>
     );
 }
 
@@ -101,6 +116,10 @@ const FormWrapper = styled.form`
     font-style: italic;
     color: #afafaf;
   }
+`;
+
+const FormSpinner = styled(Spinner)`
+  margin-top: 30%;
 `;
 
 export const Button = styled.button`
