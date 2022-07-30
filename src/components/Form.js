@@ -119,7 +119,7 @@ const FormWrapper = styled.form`
 `;
 
 const FormSpinner = styled(Spinner)`
-  margin-top: 30%;
+  margin-top: 15%;
 `;
 
 export const Button = styled.button`

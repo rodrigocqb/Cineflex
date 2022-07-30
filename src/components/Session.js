@@ -24,7 +24,7 @@ export default function Session() {
         promise.then((response) => {
             setSeats(response.data);
         });
-    }, []);
+    }, [idSessao]);
 
     return (
         <>

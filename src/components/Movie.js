@@ -16,7 +16,7 @@ export default function Movie() {
         promise.then((response) => {
             setSessions(response.data);
         });
-    }, []);
+    }, [idFilme]);
 
     return (
         <>
