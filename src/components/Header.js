@@ -46,6 +46,9 @@ const BackButton = styled.button`
     width: 30px;
     height: 30px;
     border: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     background-color: #e8833a;
     color: #ffffff;
