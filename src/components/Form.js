@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Loader, { LoaderWrapper, Spinner } from "../styles/Loader";
+import { LoaderWrapper, Spinner } from "../styles/Loader";
 
 export default function Form({
     cpf,
@@ -126,6 +126,7 @@ export const Button = styled.button`
   width: 225px;
   height: 42px;
   margin-top: 57px;
+  margin-bottom: 137px;
   border: 0px;
   background-color: #e8833a;
   border-radius: 3px;
