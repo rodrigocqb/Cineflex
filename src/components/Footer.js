@@ -4,7 +4,7 @@ export default function Footer({ img, title, children }) {
     return (
         <AppFooter>
             <Container>
-                <img src={img} />
+                <img src={img} alt="" />
             </Container>
             <div>
                 <div>
@@ -25,7 +25,7 @@ const AppFooter = styled.footer`
   left: 0;
   display: flex;
   align-items: center;
-  background-color: #dfe6ed;
+  background-color: ${props => props.theme.footer};
   padding-left: 10px;
 
   span {

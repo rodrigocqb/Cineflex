@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Button } from "./Form";
 
 
-export default function () {
+export default function Success() {
     const { state } = useLocation();
     let { cpf, name, time, date, title, seatNames } = state;
     seatNames.sort((a, b) => {
@@ -55,7 +55,7 @@ const SuccessWrapper = styled.main`
 
 const SuccessTitle = styled.div`
   font-weight: 700;
-  color: #247a6b;
+  color: ${props => props.theme.successFont};
   display: flex;
   justify-content: center;
 

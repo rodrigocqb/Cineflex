@@ -28,7 +28,7 @@ export default function Header() {
 const AppHeader = styled.header`
   width: 100vw;
   height: 67px;
-  background-color: #c3cfd9;
+  background-color: ${props => props.theme.header};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ const AppHeader = styled.header`
 
   h1 {
     font-size: 34px;
-    color: #e8833a;
+    color: ${props => props.theme.headerFont};
   }
 `;
 
@@ -50,7 +50,7 @@ const BackButton = styled.button`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: #e8833a;
+    background-color: ${props => props.theme.headerFont};
     color: #ffffff;
     position: absolute;
     top: 18px;

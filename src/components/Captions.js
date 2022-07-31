@@ -28,7 +28,7 @@ const CaptionsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #4e5a65;
+    color: ${props => props.theme.captionsFont};
     font-size: 13px;
   }
 `;
@@ -44,6 +44,9 @@ const Caption = styled(SeatWrapper)`
 
             case "yellow":
                 return "#FBE192";
+
+            default:
+                return;
         }
     }};
   border-color: ${(props) => {
@@ -56,6 +59,9 @@ const Caption = styled(SeatWrapper)`
 
             case "yellow":
                 return "#F7C52B";
+
+            default:
+                return;
         }
     }};
   margin-bottom: 8px;
