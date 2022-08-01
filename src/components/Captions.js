@@ -28,7 +28,7 @@ const CaptionsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: ${props => props.theme.captionsFont};
+    color: ${(props) => props.theme.captionsFont};
     font-size: 13px;
   }
 `;

@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 export default function Footer({ img, title, children }) {
-    return (
-        <AppFooter>
-            <Container>
-                <img src={img} alt="" />
-            </Container>
-            <div>
-                <div>
-                    <span className="chosen-title">{title}</span>
-                </div>
-                <SpanWrapper>{children}</SpanWrapper>
-            </div>
-        </AppFooter>
-    );
+  return (
+    <AppFooter>
+      <Container>
+        <img src={img} alt="" />
+      </Container>
+      <div>
+        <div>
+          <span className="chosen-title">{title}</span>
+        </div>
+        <SpanWrapper>{children}</SpanWrapper>
+      </div>
+    </AppFooter>
+  );
 }
 
 const AppFooter = styled.footer`
@@ -25,7 +25,7 @@ const AppFooter = styled.footer`
   left: 0;
   display: flex;
   align-items: center;
-  background-color: ${props => props.theme.footer};
+  background-color: ${(props) => props.theme.footer};
   padding-left: 10px;
 
   span {

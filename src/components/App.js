@@ -11,14 +11,14 @@ import Success from "./Success";
 import ThemeSwitch from "../styles/ThemeSwitch";
 
 function App() {
-  const [theme, setTheme] = useState(true)
+  const [theme, setTheme] = useState(true);
 
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme ? LightTheme : DarkTheme}>
         <GlobalStyle />
         <Header />
-        <ThemeSwitch setTheme={setTheme} theme={theme}/>
+        <ThemeSwitch setTheme={setTheme} theme={theme} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sessoes/:idFilme" element={<Movie />} />

@@ -28,7 +28,7 @@ export default function Header() {
 const AppHeader = styled.header`
   width: 100vw;
   height: 67px;
-  background-color: ${props => props.theme.header};
+  background-color: ${(props) => props.theme.header};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,22 +38,22 @@ const AppHeader = styled.header`
 
   h1 {
     font-size: 34px;
-    color: ${props => props.theme.headerFont};
+    color: ${(props) => props.theme.headerFont};
   }
 `;
 
 const BackButton = styled.button`
-    width: 30px;
-    height: 30px;
-    border: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: ${props => props.theme.headerFont};
-    color: #ffffff;
-    position: absolute;
-    top: 18px;
-    left: 15px;
-    font-size: 18px;
+  width: 30px;
+  height: 30px;
+  border: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.headerFont};
+  color: #ffffff;
+  position: absolute;
+  top: 18px;
+  left: 15px;
+  font-size: 18px;
 `;

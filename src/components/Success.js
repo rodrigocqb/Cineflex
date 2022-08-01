@@ -2,49 +2,48 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "./Form";
 
-
 export default function Success() {
-    const { state } = useLocation();
-    let { cpf, name, time, date, title, seatNames } = state;
-    seatNames.sort((a, b) => {
-        return a - b;
-    });
+  const { state } = useLocation();
+  let { cpf, name, time, date, title, seatNames } = state;
+  seatNames.sort((a, b) => {
+    return a - b;
+  });
 
-    return (
-        <>
-            <SuccessWrapper>
-                <SuccessTitle>
-                    <h2>Pedido feito com sucesso!</h2>
-                </SuccessTitle>
+  return (
+    <>
+      <SuccessWrapper>
+        <SuccessTitle>
+          <h2>Pedido feito com sucesso!</h2>
+        </SuccessTitle>
 
-                <Receipt>
-                    <div>
-                        <h3>Filme e sessão</h3>
-                        <p>{title}</p>
-                        <p>{`${date} ${time}`}</p>
-                    </div>
-                    <div>
-                        <h3>Ingressos</h3>
-                        {seatNames.map((value) => {
-                            return (
-                                <p key={value}>
-                                    {value.length > 1 ? `Assento ${value}` : `Assento 0${value}`}
-                                </p>
-                            );
-                        })}
-                    </div>
-                    <div>
-                        <h3>Comprador</h3>
-                        <p>{`Nome: ${name}`}</p>
-                        <p>{`CPF: ${cpf}`}</p>
-                    </div>
-                </Receipt>
-                <Link to="/">
-                    <Button>Voltar pra Home</Button>
-                </Link>
-            </SuccessWrapper>
-        </>
-    );
+        <Receipt>
+          <div>
+            <h3>Filme e sessão</h3>
+            <p>{title}</p>
+            <p>{`${date} ${time}`}</p>
+          </div>
+          <div>
+            <h3>Ingressos</h3>
+            {seatNames.map((value) => {
+              return (
+                <p key={value}>
+                  {value.length > 1 ? `Assento ${value}` : `Assento 0${value}`}
+                </p>
+              );
+            })}
+          </div>
+          <div>
+            <h3>Comprador</h3>
+            <p>{`Nome: ${name}`}</p>
+            <p>{`CPF: ${cpf}`}</p>
+          </div>
+        </Receipt>
+        <Link to="/">
+          <Button>Voltar pra Home</Button>
+        </Link>
+      </SuccessWrapper>
+    </>
+  );
 }
 
 const SuccessWrapper = styled.main`
@@ -55,7 +54,7 @@ const SuccessWrapper = styled.main`
 
 const SuccessTitle = styled.div`
   font-weight: 700;
-  color: ${props => props.theme.successFont};
+  color: ${(props) => props.theme.successFont};
   display: flex;
   justify-content: center;
 

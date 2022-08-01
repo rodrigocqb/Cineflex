@@ -32,7 +32,7 @@ export default function Session() {
                 <Loader />
             ) : (
                 <>
-                    <main>
+                    <SessionContainer>
                         <Title>Selecione o(s) assento(s)</Title>
 
                         <SeatList>
@@ -65,7 +65,7 @@ export default function Session() {
                             seatIds={seatIds}
                             seatNames={seatNames}
                         />
-                    </main>
+                    </SessionContainer>
 
                     <Footer img={seats.movie.posterURL} title={seats.movie.title}>
                         {<span>{`${seats.day.weekday} - ${seats.name}`}</span>}
@@ -81,9 +81,16 @@ const Title = styled.h2`
 `;
 
 const SeatList = styled.div`
+  max-width: 323px;
   display: flex;
   flex-wrap: wrap;
   column-gap: 7px;
   row-gap: 18px;
   justify-content: center;
+`;
+
+const SessionContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

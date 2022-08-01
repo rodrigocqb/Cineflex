@@ -56,9 +56,9 @@ table {
 }
 
 body {
-    background-color: ${props => props.theme.body};
+    background-color: ${(props) => props.theme.body};
     font-family: 'Roboto', sans-serif;
-    color: ${props => props.theme.mainFont};
+    color: ${(props) => props.theme.mainFont};
 }
 
 main {
