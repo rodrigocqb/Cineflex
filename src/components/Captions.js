@@ -21,6 +21,8 @@ export default function Captions() {
 }
 
 const CaptionsWrapper = styled.div`
+  width: 375px;
+  padding: 0 42px;
   display: flex;
   margin-top: 16px;
   justify-content: space-around;
